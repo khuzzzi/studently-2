@@ -5,34 +5,28 @@ import Comment from "../models/postComments.model.js";
 
 export const createPost = async (req, res) => {
   try {
-      const { cloudinaryMedia } = req;
       const { postTitle, postContent } = req.body;
 
-      if (!cloudinaryMedia || cloudinaryMedia.length === 0) {
-          return res.status(400).json({ message: 'No media files uploaded' });
-      }
+      // Get the media URLs from Cloudinary
+      const mediaUrls = req.uploadedFiles.map(file => file.secure_url);
 
-      const post = {
-          postTitle,
-          postContent,
-          media: cloudinaryMedia,
-      };
-
-      await Post.create(post); // Pass the entire post object here
-
-      return res.cookie()
-      res.status(201).json({
-          message: 'Post created successfully!',
-          data: post,
+      // Save the post to your database (using a Post model)
+      const newPost = new Post({
+          title: postTitle,
+          content: postContent,
+          media: mediaUrls, // Store the Cloudinary URLs
       });
+
+      await newPost.save();
+
+      // Respond with success
+      res.status(200).json({ success: true, message: 'Post created successfully!' });
   } catch (error) {
       console.error('Error creating post:', error);
-      res.status(500).json({
-          message: 'Error creating post',
-          error,
-      });
+      res.status(500).json({ message: 'Error creating post' });
   }
 };
+
 
 export const showAllPosts = async(req,res)=>{
     // console.log(req.id)

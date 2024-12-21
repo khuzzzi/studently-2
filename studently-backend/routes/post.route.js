@@ -6,7 +6,7 @@ import { isAuthenticated } from "../middleware/authentication.js";
 
 const Router = express.Router();
 
-Router.route("/createPost").post(upload.array("media"), uploadToCloudinary,  createPost);
+Router.route("/createPost").post(upload.array("media"), uploadToCloudinary, createPost);
 Router.route("/allPosts").get(showAllPosts);
 Router.route("/likePost/:id").post(isAuthenticated, likePost);
 Router.route("/dislikePost/:id").post(isAuthenticated, dislikePost);

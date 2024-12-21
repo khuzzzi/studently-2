@@ -1,54 +1,40 @@
-import { v2 as cloudinary } from 'cloudinary';
-import fs from 'fs/promises'; // To delete temporary files
-import path from 'path'; // To check file extensions
+import cloudinary from 'cloudinary';
 
-// Cloudinary configuration
+// Cloudinary configuration (replace with your Cloudinary credentials)
 cloudinary.config({
-    cloud_name: 'dzbnfmlkm',
-    api_key: '636855189179161',
-    api_secret: 'M0mHM76aA-hgIlybquWe91P2LXY',
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-// Middleware to upload files to Cloudinary
+// Middleware to upload media to Cloudinary
 export const uploadToCloudinary = async (req, res, next) => {
     try {
-        if (!req.files || req.files.length === 0) {
-            return res.status(400).json({ message: 'No files to upload' });
-        }
+        const mediaFiles = req.files;
 
-        const uploadedMedia = [];
-
-        for (const file of req.files) {
-            // Determine resource_type based on file extension or MIME type
-            const fileExtension = path.extname(file.originalname).toLowerCase();
-            let resourceType = 'image'; // Default to image
-
-            // If file is a video, set resource_type to 'video'
-            const videoExtensions = ['.mp4', '.mov', '.webm'];
-            if (videoExtensions.includes(fileExtension)) {
-                resourceType = 'video';
-            }
-
-            // Upload the file to Cloudinary
-            const result = await cloudinary.uploader.upload(file.path, {
-                folder: 'uploads',
-                use_filename: true,
-                unique_filename: false,
-                resource_type: resourceType, // Dynamically set resource_type based on file type
+        // Upload each file to Cloudinary
+        const uploadPromises = mediaFiles.map((file) => {
+            return new Promise((resolve, reject) => {
+                cloudinary.v2.uploader.upload_stream(
+                    { resource_type: 'auto' }, // Auto detects image or video
+                    (error, result) => {
+                        if (error) reject(error);
+                        resolve(result);
+                    }
+                ).end(file.buffer); // Use .end to upload the file buffer
             });
+        });
 
-            // Add Cloudinary URL to the array
-            uploadedMedia.push(result.secure_url);
+        // Wait for all files to upload
+        const uploadedFiles = await Promise.all(uploadPromises);
 
-            // Remove the temporary file after uploading
-            await fs.unlink(file.path);
-        }
+        // Attach the uploaded files URLs to the request (you can store them in DB)
+        req.uploadedFiles = uploadedFiles;
 
-        // Attach the uploaded media URLs to the request object
-        req.cloudinaryMedia = uploadedMedia;
-        next(); // Proceed to the next middleware or route handler
+        // Proceed to the next middleware
+        next();
     } catch (error) {
-        console.error('Cloudinary Upload Error:', error);
-        res.status(500).json({ message: 'Error uploading files to Cloudinary', error });
+        console.error('Error uploading to Cloudinary:', error);
+        return res.status(500).json({ message: 'Error uploading files to Cloudinary' });
     }
 };

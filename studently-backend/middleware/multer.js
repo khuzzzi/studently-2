@@ -1,24 +1,16 @@
 import multer from 'multer';
-import path from 'path';
+import { uploadToCloudinary } from '../middleware/cloudinary/cloudinary.js';
 
-// Define allowed file types
+// Multer Configuration - use memoryStorage instead of diskStorage
+const storage = multer.memoryStorage(); // Store files in memory instead of disk
+
+// Allowed file types (images and videos)
 const allowedMimeTypes = [
     'image/jpeg', 'image/png', 'image/gif', 'image/webp', // Images
     'video/mp4', 'video/mpeg', 'video/webm', 'video/quicktime', // Videos
 ];
 
-// Multer Configuration
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, 'uploads/'); // Temporary upload directory
-    },
-    filename: (req, file, cb) => {
-        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-        cb(null, `${uniqueSuffix}-${file.originalname}`);
-    },
-});
-
-// File filter to restrict uploads to specific media types
+// Multer file filter to validate file types
 const fileFilter = (req, file, cb) => {
     if (allowedMimeTypes.includes(file.mimetype)) {
         cb(null, true); // Accept the file
@@ -27,7 +19,7 @@ const fileFilter = (req, file, cb) => {
     }
 };
 
-// Multer instance
+// Multer instance with memory storage
 const upload = multer({
     storage,
     fileFilter,
