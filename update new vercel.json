@@ -10,17 +10,17 @@
       }
     },
     {
-      "src": "studently-backend/index.js",
+      "src": "studently-backend/app.js",
       "use": "@vercel/node"
     }
   ],
   "routes": [
     {
-      "src": "/api/(.*)",
-      "dest": "studently-backend/index.js"
+      "src": "/api/v1/(.*)",
+      "dest": "studently-backend/app.js"
     },
     {
-      "src": "/(.*)",
+      "src": "/((?!api/).*)",
       "dest": "studently-frontend/dist/$1"
     }
   ]
