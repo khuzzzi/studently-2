@@ -19,7 +19,7 @@ const PORT = 3000;
 
 
 const corsOptions = {
-    origin: ["https://studently-1ldk.vercel.app"], // Ensure this matches your frontend's origin
+    origin: ["https://studently-2-xipj.vercel.app"], // Ensure this matches your frontend's origin
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
 };

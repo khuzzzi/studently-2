@@ -14,7 +14,7 @@ const PostDialog = ({ isOpen, setIsOpen, postId }) => {
     const handleCommentSubmit = async() => {
         console.log(comment)
         try {
-            const response = await axios.post(`https://studently-1ldk.vercel.app/api/v1/posts/commentPost/${postId}`
+            const response = await axios.post(`https://studently-2-xipj.vercel.app/api/v1/posts/commentPost/${postId}`
                 ,{comment},{withCredentials:true})
               if(response.data.success === true){
                 setIsOpen(false)

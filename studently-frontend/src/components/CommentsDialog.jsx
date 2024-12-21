@@ -20,7 +20,7 @@ useEffect(() => {
   const getPostComments = async () => {
     try {
       const response = await axios.get(
-        `https://studently-1ldk.vercel.app/api/v1/posts/getPostComments/${selectedPostId}`,
+        `https://studently-2-xipj.vercel.app/api/v1/posts/getPostComments/${selectedPostId}`,
         { withCredentials: true }
       );
 

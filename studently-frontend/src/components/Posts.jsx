@@ -25,7 +25,7 @@ const Posts = () => {
   const countComments = async (postId) => {
     try {
       const response = await axios.get(
-        `https://studently-1ldk.vercel.app/api/v1/posts/getPostComments/${postId}`,
+        `https://studently-2-xipj.vercel.app/api/v1/posts/getPostComments/${postId}`,
         { withCredentials: true }
       );
       setAllData(response);
@@ -85,7 +85,7 @@ const Posts = () => {
   const likePost = async (postId) => {
     try {
       const response = await axios.post(
-        `https://studently-1ldk.vercel.app/api/v1/posts/likePost/${postId}`,
+        `https://studently-2-xipj.vercel.app/api/v1/posts/likePost/${postId}`,
         {},
         { withCredentials: true }
       );
@@ -100,7 +100,7 @@ const Posts = () => {
   const dislikePost = async (postId) => {
     try {
       const response = await axios.post(
-        `https://studently-1ldk.vercel.app/api/v1/posts/dislikePost/${postId}`,
+        `https://studently-2-xipj.vercel.app/api/v1/posts/dislikePost/${postId}`,
         {},
         { withCredentials: true }
       );

@@ -8,7 +8,7 @@ const useGetAllPosts = () => {
     console.log("Fetching posts...");
     const GetAllPosts = async () => {
       try {
-        const response = await axios.get("https://studently-1ldk.vercel.app/api/v1/posts/allPosts");
+        const response = await axios.get("https://studently-2-xipj.vercel.app/api/v1/posts/allPosts");
         if (response.data.success === true) {
           dispatch(setPosts(response.data.allPosts));
         }

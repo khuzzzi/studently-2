@@ -22,7 +22,7 @@ export default function Login() {
 
     try {
         // Send login credentials to the server (API endpoint for user login)
-        const response = await axios.post("https://studently-1ldk.vercel.app/api/v1/user/login", {
+        const response = await axios.post("https://studently-2-xipj.vercel.app/api/v1/user/login", {
             email,
             password,
         }, {
