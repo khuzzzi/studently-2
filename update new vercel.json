@@ -2,26 +2,22 @@
   "version": 2,
   "builds": [
     {
-      "src": "studently-frontend/package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "buildCommand": "cd studently-frontend && npm install && npm run build",
-        "outputDirectory": "studently-frontend/dist"
-      }
-    },
-    {
       "src": "studently-backend/app.js",
       "use": "@vercel/node"
+    },
+    {
+      "src": "studently-frontend/package.json",
+      "use": "@vercel/next"
     }
   ],
   "routes": [
     {
-      "src": "/api/v1/(.*)",
+      "src": "/api/(.*)",
       "dest": "studently-backend/app.js"
     },
     {
-      "src": "/((?!api/).*)",
-      "dest": "studently-frontend/dist/$1"
+      "src": "/(.*)",
+      "dest": "studently-frontend/$1"
     }
   ]
 }
