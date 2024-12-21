@@ -68,7 +68,7 @@ export function CreatePostForm({setToggleCreatePost}) {
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/v1/posts/createPost",
+        "https://studently-1ldk.vercel.app/api/v1/posts/createPost",
         formData, {
         headers: {
           "Content-Type": "multipart/form-data",

@@ -19,7 +19,7 @@ export default function Signup() {
   
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/v1/user/signup",
+        "https://studently-1ldk.vercel.app/api/v1/user/signup",
         {
           username,
           email,
