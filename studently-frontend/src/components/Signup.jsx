@@ -19,7 +19,7 @@ export default function Signup() {
   
     try {
       const response = await axios.post(
-        "https://studently-2-xipj.vercel.app/api/v1/user/signup",
+        "https://studently-2.onrender.com/api/v1/user/signup",
         {
           username,
           email,
