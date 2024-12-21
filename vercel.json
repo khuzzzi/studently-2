@@ -2,7 +2,7 @@
   "version": 2,
   "builds": [
     {
-      "src": "frontend/package.json",
+      "src": "studently-frontend/package.json",
       "use": "@vercel/static-build",
       "config": {
         "buildCommand": "npm run build",
@@ -10,18 +10,18 @@
       }
     },
     {
-      "src": "backend/app.js",
+      "src": "studently-backend/index.js",
       "use": "@vercel/node"
     }
   ],
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "backend/app.js"
+      "dest": "studently-backend/index.js"
     },
     {
       "src": "/(.*)",
-      "dest": "frontend/$1"
+      "dest": "studently-frontend/$1"
     }
   ],
   "env": {
