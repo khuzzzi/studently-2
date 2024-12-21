@@ -5,8 +5,8 @@
       "src": "studently-frontend/package.json",
       "use": "@vercel/static-build",
       "config": {
-        "buildCommand": "npm run build",
-        "outputDirectory": "dist"
+        "buildCommand": "cd studently-frontend && npm install && npm run build",
+        "outputDirectory": "studently-frontend/dist"
       }
     },
     {
@@ -21,11 +21,7 @@
     },
     {
       "src": "/(.*)",
-      "dest": "studently-frontend/$1"
+      "dest": "studently-frontend/dist/$1"
     }
-  ],
-  "env": {
-    "MONGODB_URI": "@mongodb_uri",
-    "NODE_ENV": "production"
-  }
+  ]
 }
