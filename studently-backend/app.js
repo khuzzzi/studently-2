@@ -59,3 +59,5 @@ app.get("*",(_,res) => res.sendFile(path.resolve(_dirname,"studently-frontend","
 app.listen(PORT, () => {
     console.log(`Server started at http://localhost:${PORT}`);
 });
+
+export default app
